@@ -1,4 +1,4 @@
-module gopkg
+module github.com/Sagiri201/gopkg
 
 go 1.24.0
 

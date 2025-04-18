@@ -3,7 +3,6 @@ package log
 import (
 	"context"
 	"fmt"
-	"gopkg/utils"
 	"io"
 	"log/slog"
 	"os"
@@ -11,6 +10,8 @@ import (
 	"runtime"
 	"strconv"
 	"sync"
+
+	"github.com/Sagiri201/gopkg/utils"
 
 	"gopkg.in/natefinch/lumberjack.v2"
 )
