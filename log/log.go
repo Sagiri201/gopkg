@@ -61,6 +61,9 @@ func NewLogHandler(opts ...LogHandlerOption) (l *LogHandler) {
 func (l *LogHandler) Handle(ctx context.Context, r slog.Record) (err error) {
 	l.mu.Lock()
 	defer l.mu.Unlock()
+	if traceId, ok := ctx.Value("traceId").(string); ok {
+		r.AddAttrs(slog.String("traceId", traceId))
+	}
 	if r.Level == slog.LevelError {
 		r.AddAttrs(slog.Any("stack", getStackTrace(4, 3)))
 	}
