@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strconv"
+	"strings"
 	"sync"
 
 	"github.com/Sagiri201/gopkg/utils"
@@ -98,6 +99,25 @@ func LogHandlerWithIoWriter(w io.Writer) LogHandlerOption {
 func LogHandlerWithLevel(level slog.Level) LogHandlerOption {
 	return func(l *LogHandler) {
 		l.level.Set(level)
+	}
+}
+
+// LogHandlerWithStrLevel 设置日志等级(字符串)
+func LogHandlerWithStrLevel(level string) LogHandlerOption {
+	return func(l *LogHandler) {
+		switch {
+		case strings.EqualFold("DEBUG", level):
+			l.level.Set(slog.LevelDebug)
+		case strings.EqualFold("INFO", level):
+			l.level.Set(slog.LevelInfo)
+		case strings.EqualFold("WARN", level):
+			l.level.Set(slog.LevelWarn)
+		case strings.EqualFold("ERROR", level):
+			l.level.Set(slog.LevelError)
+		default:
+			slog.Warn("未知的日志等级, 已设置为默认的INFO等级", slog.String("level", level))
+			l.level.Set(slog.LevelInfo)
+		}
 	}
 }
 
